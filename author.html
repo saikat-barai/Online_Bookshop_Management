@@ -375,6 +375,26 @@
                     </div>
                 </div>
             </div>
+            <!-- delete author modal  -->
+            <!-- Modal -->
+            <div class="modal fade" id="deleteAuthorModal" tabindex="-1" aria-labelledby="deleteAuthorModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="deleteAuthorModalLabel">Do You Want To Delete This Author...?</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Once You Delete This Author You Can't Get Back...!!!</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                            <button onclick="deleteAuthorFinaly()" type="button" class="btn btn-danger">Yes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
     </div>
     <!--end::App Content-->
     </main>
@@ -614,7 +634,7 @@
                             <td>${author['name']}</td>
                             <td>${author['email']}</td>
                             <td><button class="btn btn-success update-btn" data-id="${author['author_id']}">Update</button></td>
-                            <td><button class="btn btn-danger update-btn" data-id="${author['author_id']}">Delete</button></td>`;
+                            <td><button class="btn btn-danger delete-btn" data-id="${author['author_id']}">Delete</button></td>`;
 
                     tableData.appendChild(row);
                 });
@@ -623,8 +643,14 @@
                 document.querySelectorAll('.update-btn').forEach(btn=>{
                     btn.addEventListener('click', function(){
                         goToUpdate(this.dataset.id);
-                    })
-                })
+                    });
+                });
+                // add event listener for delete button
+                document.querySelectorAll('.delete-btn').forEach(btn=>{
+                    btn.addEventListener('click', function(){
+                        deleteAuthor(this.dataset.id);
+                    });
+                });
 
             } catch (error) {
                 console.error("Error For Author:", error);
@@ -736,6 +762,47 @@
                 console.log('Author Update Attempt Completed');
             }
         }
+
+        let deleteAuthorId = null;
+        //  delete modal show  
+        async function deleteAuthor(authorId){
+            deleteAuthorId = authorId;
+            let deleteModal = new bootstrap.Modal(document.getElementById('deleteAuthorModal'));
+            deleteModal.show();
+        }
+
+        // finally delete author 
+        async function deleteAuthorFinaly(){
+            let URL = `https://bs-api.sobuj.net/view/authors/deleteAuthor.php`;
+
+            try {
+                if (!deleteAuthorId) {
+                    alert('Author not found...!!!');
+                    return;
+                }
+
+                let formData = new FormData();
+                formData.append('author_id', deleteAuthorId);
+                let response = await axios.post(URL, formData);
+
+                if (response.status === 200) {
+                    // alert('Author Deleted Successfully...!!!');
+                    let modal = bootstrap.Modal.getInstance(document.getElementById('deleteAuthorModal'));
+                    modal.hide();
+                    getAuthors();
+                }
+                else{
+                    alert('Faild to delete author, Try again laterrr...!!!');
+                }
+                
+            } catch (error) {
+                console.error("Error For Author:", error);
+                alert('Faild to delete author, Try again later...!!!');
+                
+            }
+        }
+
+        async
     </script>
 </body>
 <!--end::Body-->
