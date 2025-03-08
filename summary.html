@@ -30,8 +30,10 @@
     <link rel="stylesheet" href="../css/adminlte.css" />
     <!--end::Required Plugin(AdminLTE)-->
     <!-- apexcharts -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/apexcharts@3.37.1/dist/apexcharts.css"
-        integrity="sha256-4MX+61mt9NVvvuPjUWdUdyfZfxSB1/Rf9WtqRHgG5S0=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/apexcharts@3.37.1/dist/apexcharts.css" integrity="sha256-4MX+61mt9NVvvuPjUWdUdyfZfxSB1/Rf9WtqRHgG5S0=" crossorigin="anonymous" />
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 
 <body class="layout-fixed sidebar-expand-lg bg-body-tertiary">
@@ -283,12 +285,12 @@
                     <!--begin::Row-->
                     <div class="row">
                         <div class="col-sm-6">
-                            <h3 class="mb-0">Author Management</h3>
+                            <h3 class="mb-0">Summary Report</h3>
                         </div>
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-end">
-                                <button class="btn btn-primary" data-bs-toggle="modal"
-                                    data-bs-target="#addAuthorModal">Add New</button>
+                                <!-- <button class="btn btn-primary" data-bs-toggle="modal"
+                                    data-bs-target="#addAuthorModal">Add New</button> -->
                             </ol>
                         </div>
                     </div>
@@ -301,22 +303,118 @@
                 <div class="container-fluid">
                     <!-- Info boxes -->
                     <div class="row">
-                        <div class="">
-                            <table class="table table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th style="">ID</th>
-                                        <th>Name</th>
-                                        <th>Email</th>
-                                        <th>Update</th>
-                                        <th>Delete</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="author_list">
-
-                                </tbody>
-                            </table>
+                        <div class="col-12 col-sm-6 col-md-3">
+                            <div class="info-box">
+                                <span class="info-box-icon text-bg-primary shadow-sm">
+                                    <i class="fa-solid fa-book"></i>
+                                </span>
+                                <div class="info-box-content">
+                                    <span class="info-box-text">Total Books</span>
+                                    <span class="info-box-number" id="total_books">
+                                        Loading....
+                                    </span>
+                                </div>
+                                <!-- /.info-box-content -->
+                            </div>
+                            <!-- /.info-box -->
                         </div>
+                        <!-- /.col -->
+                        <div class="col-12 col-sm-6 col-md-3">
+                            <div class="info-box">
+                                <span class="info-box-icon text-bg-danger shadow-sm">
+                                    <i class="fa-solid fa-users"></i>
+                                </span>
+                                <div class="info-box-content">
+                                    <span class="info-box-text">Total Customer</span>
+                                    <span class="info-box-number" id="total_customers">Loading...</span>
+                                </div>
+                                <!-- /.info-box-content -->
+                            </div>
+                            <!-- /.info-box -->
+                        </div>
+                        <!-- /.col -->
+                        <!-- fix for small devices only -->
+                        <!-- <div class="clearfix hidden-md-up"></div> -->
+                        <div class="col-12 col-sm-6 col-md-3">
+                            <div class="info-box">
+                                <span class="info-box-icon text-bg-success shadow-sm">
+                                    <i class="bi bi-cart-fill"></i>
+                                </span>
+                                <div class="info-box-content">
+                                    <span class="info-box-text">Total Orders</span>
+                                    <span class="info-box-number" id="total_orders">Loading...</span>
+                                </div>
+                                <!-- /.info-box-content -->
+                            </div>
+                            <!-- /.info-box -->
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-12 col-sm-6 col-md-3">
+                            <div class="info-box">
+                                <span class="info-box-icon text-bg-danger shadow-sm">
+                                    <i class="fa-solid fa-money-bills" style="color: #ffffff;"></i>
+                                </span>
+                                <div class="info-box-content">
+                                    <span class="info-box-text">Total Order Value</span>
+                                    <span class="info-box-number" id="total_order_value">Loading...</span>
+                                </div>
+                                <!-- /.info-box-content -->
+                            </div>
+                            <!-- /.info-box -->
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-3">
+                            <div class="info-box">
+                                <span class="info-box-icon text-bg-success shadow-sm">
+                                    <i class="fa-solid fa-cart-plus" style="color: #ffffff;"></i>
+                                </span>
+                                <div class="info-box-content">
+                                    <span class="info-box-text">Today's Order</span>
+                                    <span class="info-box-number" id="todays_orders">Loading...</span>
+                                </div>
+                                <!-- /.info-box-content -->
+                            </div>
+                            <!-- /.info-box -->
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-3">
+                            <div class="info-box">
+                                <span class="info-box-icon text-bg-warning shadow-sm">
+                                    <i class="fa-solid fa-money-bill" style="color: #ffffff;"></i>
+                                </span>
+                                <div class="info-box-content">
+                                    <span class="info-box-text">Today's Order Value</span>
+                                    <span class="info-box-number" id="todays_order_value">Loading...</span>
+                                </div>
+                                <!-- /.info-box-content -->
+                            </div>
+                            <!-- /.info-box -->
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-3">
+                            <div class="info-box">
+                                <span class="info-box-icon text-bg-primary shadow-sm">
+                                    <i class="fa-solid fa-bag-shopping" style="color: #ffffff;"></i>
+                                </span>
+                                <div class="info-box-content">
+                                    <span class="info-box-text">Monthly Orders</span>
+                                    <span class="info-box-number" id="monthly_orders">Loading...</span>
+                                </div>
+                                <!-- /.info-box-content -->
+                            </div>
+                            <!-- /.info-box -->
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-3">
+                            <div class="info-box">
+                                <span class="info-box-icon text-bg-dark shadow-sm">
+                                    <i class="fa-solid fa-money-bill-trend-up" style="color: #ffffff;"></i>
+                                </span>
+                                <div class="info-box-content">
+                                    <span class="info-box-text">Monthly Orders Value</span>
+                                    <span class="info-box-number" id="monthly_order_value">Loading...</span>
+                                </div>
+                                <!-- /.info-box-content -->
+                            </div>
+                            <!-- /.info-box -->
+                        </div>
+                        <!-- /.col -->
                     </div>
                     <!-- /.row -->
 
@@ -328,82 +426,6 @@
 
             <!--end::Container-->
 
-
-            <!-- add author modal  -->
-            <!-- Modal -->
-            <div class="modal fade" id="addAuthorModal" tabindex="-1" aria-labelledby="addAuthorModalLabel"
-                aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="addAuthorModalLabel">Add New Author</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="mb-3">
-                                <label for="recipient-name" class="col-form-label">Author Name:</label>
-                                <input type="text" class="form-control" id="nameId">
-                            </div>
-                            <div class="mb-3">
-                                <label for="message-text" class="col-form-label">Author Email:</label>
-                                <input type="text" class="form-control" id="emailId">
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button onclick="addAuthor()" type="button" class="btn btn-primary">Save changes</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- edit author modal  -->
-            <!-- Modal -->
-            <div class="modal fade" id="editAuthorModal" tabindex="-1" aria-labelledby="editAuthorModalLabel"
-                aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="editAuthorModalLabel">Edit Author</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="mb-3">
-                                <label for="recipient-name" class="col-form-label">Author Name:</label>
-                                <input type="text" class="form-control" id="nameIdE">
-                            </div>
-                            <div class="mb-3">
-                                <label for="message-text" class="col-form-label">Author Email:</label>
-                                <input type="text" class="form-control" id="emailIdE">
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button onclick="updateAuthor()" type="button" class="btn btn-primary">Update</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- delete author modal  -->
-            <!-- Modal -->
-            <div class="modal fade" id="deleteAuthorModal" tabindex="-1" aria-labelledby="deleteAuthorModalLabel"
-                aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="deleteAuthorModalLabel">Do You Want To Delete This
-                                Author...?</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <p>Once You Delete This Author You Can't Get Back...!!!</p>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-                            <button onclick="deleteAuthorFinaly()" type="button" class="btn btn-danger">Yes</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
     </div>
     <!--end::App Content-->
     </main>
@@ -617,201 +639,29 @@
 
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
+
     <script>
-        async function getAuthors() {
-            let URL = 'https://bs-api.sobuj.net/view/authors/readAuthors.php';
-            let tableData = document.getElementById('author_list');
-
-            try {
-                tableData.innerHTML = " <tr class = 'text-center'><td colspan='5'>Loading Data.....!!!</td></tr>"
-
-                let response = await axios.get(URL);
-                let authors = response.data;
-
-                // clear loading message 
-                tableData.innerHTML = "";
-
-                if (!authors.length) {
-                    tableData.innerHTML = " <tr class = 'text-center'><td colspan='5'>No Data Found.....!!!</td></tr>";
-                    return;
-                }
-
-                authors.forEach((author) => {
-                    let row = document.createElement('tr');
-                    row.innerHTML = `
-                            <td>${author['author_id']}</td>
-                            <td>${author['name']}</td>
-                            <td>${author['email']}</td>
-                            <td><button class="btn btn-success update-btn" data-id="${author['author_id']}">Update</button></td>
-                            <td><button class="btn btn-danger delete-btn" data-id="${author['author_id']}">Delete</button></td>`;
-
-                    tableData.appendChild(row);
-                });
-
-                // add event listener for update button
-                document.querySelectorAll('.update-btn').forEach(btn => {
-                    btn.addEventListener('click', function () {
-                        goToUpdate(this.dataset.id);
-                    });
-                });
-                // add event listener for delete button
-                document.querySelectorAll('.delete-btn').forEach(btn => {
-                    btn.addEventListener('click', function () {
-                        deleteAuthor(this.dataset.id);
-                    });
-                });
-
-            } catch (error) {
-                console.error("Error For Author:", error);
-                tableData.innerHTML = " <tr class = 'text-center'><td colspan='5'>Faild to load author, Try again later...!!!</td></tr>";
-            }
-            finally {
-                console.log('Author Fetch Attempt Completed');
-            }
-
-        }
-        getAuthors();
-
-        async function addAuthor() {
-            let URL = 'https://bs-api.sobuj.net/view/authors/insertAuthor.php';
-            let authorName = document.getElementById('nameId').value.trim();
-            let authorEmail = document.getElementById('emailId').value.trim();
-
-            try {
-                if (!authorName || !authorEmail) {
-                    alert('All Data Required...!!!');
-                    return;
-                }
-                let formData = new FormData();
-                formData.append('name', authorName);
-                formData.append('email', authorEmail);
-                let response = await axios.post(URL, formData);
-
-                if (response.status === 200) {
-                    // alert ('Author Added Successfully...!!!');
-                    document.getElementById('nameId').value = '';
-                    document.getElementById('emailId').value = '';
-
-                    let modal = bootstrap.Modal.getInstance(document.getElementById('addAuthorModal'));
-                    modal.hide();
-                    getAuthors();
-                }
-                else {
-                    alert('Faild to add author, Try again laterrr...!!!');
-                }
-
-            } catch (error) {
-                console.error("Error For Author:", error);
-                alert('Faild to add author, Try again later...!!!');
-
-            }
-            finally {
-                console.log('Author Add Attempt Completed');
-            }
-        }
-
-        let editAuthorId = null;
-        async function goToUpdate(authorId) {
-            let URL = `https://bs-api.sobuj.net/view/authors/getAuthorById.php?author_id=${authorId}`;
+        async function getSummaryReport() {
+            let URL = 'https://bs-api.sobuj.net/view/reports/summaryReport.php';
             try {
                 let response = await axios.get(URL);
-                let authorData = response.data;
-
-                if (authorData) {
-                    document.getElementById("nameIdE").value = authorData.name;
-                    document.getElementById("emailIdE").value = authorData.email;
-                    editAuthorId = authorData.author_id;
-                    let editModal = new bootstrap.Modal(document.getElementById('editAuthorModal'));
-                    editModal.show();
-                }
-                else {
-                    alert('Author not found...!!!');
-                }
+                let data = response.data;
+                document.getElementById('total_books').innerHTML = data.total_books;
+                document.getElementById('total_customers').innerHTML = data.total_customers;
+                document.getElementById('total_orders').innerHTML = data.total_orders;
+                document.getElementById('total_order_value').innerHTML = data.total_order_value;
+                document.getElementById('todays_orders').innerHTML = data.todays_orders;
+                document.getElementById('todays_order_value').innerHTML = data.todays_order_value;
+                document.getElementById('monthly_orders').innerHTML = data.monthly_orders;
+                document.getElementById('monthly_order_value').innerHTML = data.monthly_order_value;
             } catch (error) {
-                console.error("Error For Author:", error);
-                alert('Author load faild');
+                console.error("Error For Summary Report:", error);
+            }
+            finally{
+                console.log('Summary Report Loaded Successfully...!!!');
             }
         }
-
-        async function updateAuthor() {
-            let URL = 'https://bs-api.sobuj.net/view/authors/updateAuthor.php';
-            let authorName = document.getElementById('nameIdE').value.trim();
-            let authorEmail = document.getElementById('emailIdE').value.trim();
-
-            try {
-                if (!authorName || !authorEmail) {
-                    alert('All Data Required...!!!');
-                    return;
-                }
-                let formData = new FormData();
-                formData.append('author_id', editAuthorId);
-                formData.append('name', authorName);
-                formData.append('email', authorEmail);
-                let response = await axios.post(URL, formData);
-
-                if (response.status === 200) {
-                    // alert ('Author Added Successfully...!!!');
-                    document.getElementById('nameIdE').value = '';
-                    document.getElementById('emailIdE').value = '';
-
-                    let modal = bootstrap.Modal.getInstance(document.getElementById('editAuthorModal'));
-                    modal.hide();
-                    getAuthors();
-                }
-                else {
-                    alert('Faild to update author, Try again laterrr...!!!');
-                }
-
-            } catch (error) {
-                console.error("Error For Author:", error);
-                alert('Faild to update author, Try again later...!!!');
-
-            }
-            finally {
-                console.log('Author Update Attempt Completed');
-            }
-        }
-
-        let deleteAuthorId = null;
-        //  delete modal show  
-        async function deleteAuthor(authorId) {
-            deleteAuthorId = authorId;
-            let deleteModal = new bootstrap.Modal(document.getElementById('deleteAuthorModal'));
-            deleteModal.show();
-        }
-
-        // finally delete author 
-        async function deleteAuthorFinaly() {
-            let URL = `https://bs-api.sobuj.net/view/authors/deleteAuthor.php`;
-
-            try {
-                if (!deleteAuthorId) {
-                    alert('Author not found...!!!');
-                    return;
-                }
-
-                let formData = new FormData();
-                formData.append('author_id', deleteAuthorId);
-                let response = await axios.post(URL, formData);
-
-                if (response.status === 200) {
-                    // alert('Author Deleted Successfully...!!!');
-                    let modal = bootstrap.Modal.getInstance(document.getElementById('deleteAuthorModal'));
-                    modal.hide();
-                    getAuthors();
-                }
-                else {
-                    alert('Faild to delete author, Try again laterrr...!!!');
-                }
-
-            } catch (error) {
-                console.error("Error For Author:", error);
-                alert('Faild to delete author, Try again later...!!!');
-
-            }
-        }
-
-        async
+        getSummaryReport();
     </script>
 </body>
 <!--end::Body-->
