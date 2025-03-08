@@ -299,12 +299,12 @@
                     <!--begin::Row-->
                     <div class="row">
                         <div class="col-sm-6">
-                            <h3 class="mb-0">Book Management</h3>
+                            <h3 class="mb-0">Customer Management</h3>
                         </div>
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-end">
                                 <button class="btn btn-primary" data-bs-toggle="modal"
-                                    data-bs-target="#addAuthorModal">Add New Book</button>
+                                    data-bs-target="#addCustomerModal">Add New Customer</button>
                             </ol>
                         </div>
                     </div>
@@ -330,7 +330,14 @@
                                     </tr>
                                 </thead>
                                 <tbody id="customerList">
-
+                                    <!-- <tr>
+                                        <th scope="col">Customer ID</th>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Email</th>
+                                        <th scope="col">Phone</th>
+                                        <th scope="col">View</th>
+                                        <th scope="col">Delete</th>
+                                    </tr> -->
                                 </tbody>
                             </table>
                         </div>
@@ -345,6 +352,36 @@
 
             <!--end::Container-->
 
+            <!-- add customer model  -->
+            <div class="modal fade" id="addCustomerModal" tabindex="-1" aria-labelledby="addcustomerModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="addcustomerModalLabel">Add New Customer</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label for="recipient-name" class="col-form-label">Customer Name:</label>
+                                <input type="text" class="form-control" id="customerName">
+                            </div>
+                            <div class="mb-3">
+                                <label for="message-text" class="col-form-label">Customer Email:</label>
+                                <input type="text" class="form-control" id="customerEmail">
+                            </div>
+                            <div class="mb-3">
+                                <label for="message-text" class="col-form-label">Customer Phone:</label>
+                                <input type="text" class="form-control" id="customerPhone">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button onclick="addCustomer()" type="button" class="btn btn-primary">Add Customer</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             <!-- add author modal  -->
 
@@ -568,10 +605,11 @@
             let URL = 'https://bs-api.sobuj.net/view/customers/readCustomers.php';
             let tableData = document.getElementById('customerList');
             try {
-                tableData.innerHTML = " <tr class = 'text-center'><td colspan='5'>Loading Data.....!!!</td></tr>"
+                tableData.innerHTML = " <tr class = 'text-center'><td colspan='6'>Loading Data.....!!!</td></tr>"
 
                 let response = await axios.get(URL);
                 let customers = response.data;
+                console.log(customers);
 
                 // clear loading message 
                 tableData.innerHTML = "";
@@ -588,8 +626,8 @@
                             <td>${customer['name']}</td>
                             <td>${customer['email']}</td>
                             <td>${customer['phone']}</td>
-                            <td><button class="btn btn-success update-btn" data-id="${customer['book_id']}">Update</button></td>
-                            <td><button class="btn btn-danger delete-btn" data-id="${bcustomerook['book_id']}">Delete</button></td>`;
+                            <td><button class="btn btn-success update-btn" data-id="${customer['customer_id']}">Update</button></td>
+                            <td><button class="btn btn-danger delete-btn" data-id="${customer['customer_id']}">Delete</button></td>`;
 
                     tableData.appendChild(row);
                 });
@@ -611,6 +649,47 @@
             }
         }
         getCustomer();
+
+        async function addCustomer() {
+            let URL = 'https://bs-api.sobuj.net/view/customers/insertCustomer.php';
+            let customerName = document.getElementById('customerName').value.trim();
+            let customerEmail = document.getElementById('customerEmail').value.trim();
+            let customerPhone = document.getElementById('customerPhone').value.trim();
+
+            try {
+                if (!customerName || !customerEmail || !customerPhone) {
+                    alert('All Data Required...!!!');
+                    return;
+                }
+                let formData = new FormData();
+                formData.append('name', customerName);
+                formData.append('email', customerEmail);
+                formData.append('phone', customerPhone);
+                let response = await axios.post(URL, formData);
+
+                if (response.status === 200) {
+                    // alert ('Author Added Successfully...!!!');
+                    document.getElementById('customerName').value = '';
+                    document.getElementById('customerEmail').value = '';
+                    document.getElementById('customerPhone').value = '';
+
+                    let modal = bootstrap.Modal.getInstance(document.getElementById('addCustomerModal'));
+                    modal.hide();
+                    getAuthors();
+                }
+                else {
+                    alert('Faild to add Customer, Try again laterrr...!!!');
+                }
+
+            } catch (error) {
+                console.error("Error For Customer:", error);
+                alert('Faild to add Customer, Try again later...!!!');
+
+            }
+            finally {
+                console.log('Customer Add Attempt Completed');
+            }
+        }
     </script>
 </body>
 <!--end::Body-->
