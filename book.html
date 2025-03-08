@@ -299,12 +299,12 @@
                     <!--begin::Row-->
                     <div class="row">
                         <div class="col-sm-6">
-                            <h3 class="mb-0">Author Management</h3>
+                            <h3 class="mb-0">Book Management</h3>
                         </div>
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-end">
                                 <button class="btn btn-primary" data-bs-toggle="modal"
-                                    data-bs-target="#addAuthorModal">Add New</button>
+                                    data-bs-target="#addAuthorModal">Add New Book</button>
                             </ol>
                         </div>
                     </div>
@@ -317,18 +317,20 @@
                 <div class="container-fluid">
                     <!-- Info boxes -->
                     <div class="row">
-                        <div class="">
-                            <table class="table table-bordered">
+                        <div class="col-12">
+                            <table class="table">
                                 <thead>
                                     <tr>
-                                        <th style="">ID</th>
-                                        <th>Name</th>
-                                        <th>Email</th>
-                                        <th>Update</th>
-                                        <th>Delete</th>
+                                        <th scope="col">Book ID</th>
+                                        <th scope="col">Title</th>
+                                        <th scope="col">Price</th>
+                                        <th scope="col">Stock Quantity</th>
+                                        <th scope="col">Author</th>
+                                        <th scope="col">View</th>
+                                        <th scope="col">Delete</th>
                                     </tr>
                                 </thead>
-                                <tbody id="author_list">
+                                <tbody id="bookList">
 
                                 </tbody>
                             </table>
@@ -346,80 +348,7 @@
 
 
             <!-- add author modal  -->
-            <!-- Modal -->
-            <div class="modal fade" id="addAuthorModal" tabindex="-1" aria-labelledby="addAuthorModalLabel"
-                aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="addAuthorModalLabel">Add New Author</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="mb-3">
-                                <label for="recipient-name" class="col-form-label">Author Name:</label>
-                                <input type="text" class="form-control" id="nameId">
-                            </div>
-                            <div class="mb-3">
-                                <label for="message-text" class="col-form-label">Author Email:</label>
-                                <input type="text" class="form-control" id="emailId">
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button onclick="addAuthor()" type="button" class="btn btn-primary">Save changes</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- edit author modal  -->
-            <!-- Modal -->
-            <div class="modal fade" id="editAuthorModal" tabindex="-1" aria-labelledby="editAuthorModalLabel"
-                aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="editAuthorModalLabel">Edit Author</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="mb-3">
-                                <label for="recipient-name" class="col-form-label">Author Name:</label>
-                                <input type="text" class="form-control" id="nameIdE">
-                            </div>
-                            <div class="mb-3">
-                                <label for="message-text" class="col-form-label">Author Email:</label>
-                                <input type="text" class="form-control" id="emailIdE">
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button onclick="updateAuthor()" type="button" class="btn btn-primary">Update</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- delete author modal  -->
-            <!-- Modal -->
-            <div class="modal fade" id="deleteAuthorModal" tabindex="-1" aria-labelledby="deleteAuthorModalLabel"
-                aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="deleteAuthorModalLabel">Do You Want To Delete This
-                                Author...?</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <p>Once You Delete This Author You Can't Get Back...!!!</p>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-                            <button onclick="deleteAuthorFinaly()" type="button" class="btn btn-danger">Yes</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+
     </div>
     <!--end::App Content-->
     </main>
@@ -633,33 +562,37 @@
 
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
+
+
     <script>
-        async function getAuthors() {
-            let URL = 'https://bs-api.sobuj.net/view/authors/readAuthors.php';
-            let tableData = document.getElementById('author_list');
+        async function getBooks() {
+            let URL = 'https://bs-api.sobuj.net/view/books/readBook.php';
+            let tableData = document.getElementById('bookList');
 
             try {
                 tableData.innerHTML = " <tr class = 'text-center'><td colspan='5'>Loading Data.....!!!</td></tr>"
 
                 let response = await axios.get(URL);
-                let authors = response.data;
+                let books = response.data;
 
                 // clear loading message 
                 tableData.innerHTML = "";
 
-                if (!authors.length) {
-                    tableData.innerHTML = " <tr class = 'text-center'><td colspan='5'>No Data Found.....!!!</td></tr>";
+                if (!books.length) {
+                    tableData.innerHTML = " <tr class = 'text-center'><td colspan='7'>No Data Found.....!!!</td></tr>";
                     return;
                 }
 
-                authors.forEach((author) => {
+                books.forEach((book) => {
                     let row = document.createElement('tr');
                     row.innerHTML = `
-                            <td>${author['author_id']}</td>
-                            <td>${author['name']}</td>
-                            <td>${author['email']}</td>
-                            <td><button class="btn btn-success update-btn" data-id="${author['author_id']}">Update</button></td>
-                            <td><button class="btn btn-danger delete-btn" data-id="${author['author_id']}">Delete</button></td>`;
+                            <td>${book['book_id']}</td>
+                            <td>${book['title']}</td>
+                            <td>${book['price']}</td>
+                            <td>${book['stock_quantity']}</td>
+                            <td>${book['author_id']}</td>
+                            <td><button class="btn btn-success update-btn" data-id="${book['book_id']}">Update</button></td>
+                            <td><button class="btn btn-danger delete-btn" data-id="${book['book_id']}">Delete</button></td>`;
 
                     tableData.appendChild(row);
                 });
@@ -676,158 +609,11 @@
                         deleteAuthor(this.dataset.id);
                     });
                 });
-
             } catch (error) {
-                console.error("Error For Author:", error);
-                tableData.innerHTML = " <tr class = 'text-center'><td colspan='5'>Faild to load author, Try again later...!!!</td></tr>";
-            }
-            finally {
-                console.log('Author Fetch Attempt Completed');
-            }
-
-        }
-        getAuthors();
-
-        async function addAuthor() {
-            let URL = 'https://bs-api.sobuj.net/view/authors/insertAuthor.php';
-            let authorName = document.getElementById('nameId').value.trim();
-            let authorEmail = document.getElementById('emailId').value.trim();
-
-            try {
-                if (!authorName || !authorEmail) {
-                    alert('All Data Required...!!!');
-                    return;
-                }
-                let formData = new FormData();
-                formData.append('name', authorName);
-                formData.append('email', authorEmail);
-                let response = await axios.post(URL, formData);
-
-                if (response.status === 200) {
-                    // alert ('Author Added Successfully...!!!');
-                    document.getElementById('nameId').value = '';
-                    document.getElementById('emailId').value = '';
-
-                    let modal = bootstrap.Modal.getInstance(document.getElementById('addAuthorModal'));
-                    modal.hide();
-                    getAuthors();
-                }
-                else {
-                    alert('Faild to add author, Try again laterrr...!!!');
-                }
-
-            } catch (error) {
-                console.error("Error For Author:", error);
-                alert('Faild to add author, Try again later...!!!');
-
-            }
-            finally {
-                console.log('Author Add Attempt Completed');
-            }
-        }
-
-        let editAuthorId = null;
-        async function goToUpdate(authorId) {
-            let URL = `https://bs-api.sobuj.net/view/authors/getAuthorById.php?author_id=${authorId}`;
-            try {
-                let response = await axios.get(URL);
-                let authorData = response.data;
-
-                if (authorData) {
-                    document.getElementById("nameIdE").value = authorData.name;
-                    document.getElementById("emailIdE").value = authorData.email;
-                    editAuthorId = authorData.author_id;
-                    let editModal = new bootstrap.Modal(document.getElementById('editAuthorModal'));
-                    editModal.show();
-                }
-                else {
-                    alert('Author not found...!!!');
-                }
-            } catch (error) {
-                console.error("Error For Author:", error);
-                alert('Author load faild');
-            }
-        }
-
-        async function updateAuthor() {
-            let URL = 'https://bs-api.sobuj.net/view/authors/updateAuthor.php';
-            let authorName = document.getElementById('nameIdE').value.trim();
-            let authorEmail = document.getElementById('emailIdE').value.trim();
-
-            try {
-                if (!authorName || !authorEmail) {
-                    alert('All Data Required...!!!');
-                    return;
-                }
-                let formData = new FormData();
-                formData.append('author_id', editAuthorId);
-                formData.append('name', authorName);
-                formData.append('email', authorEmail);
-                let response = await axios.post(URL, formData);
-
-                if (response.status === 200) {
-                    // alert ('Author Added Successfully...!!!');
-                    document.getElementById('nameIdE').value = '';
-                    document.getElementById('emailIdE').value = '';
-
-                    let modal = bootstrap.Modal.getInstance(document.getElementById('editAuthorModal'));
-                    modal.hide();
-                    getAuthors();
-                }
-                else {
-                    alert('Faild to update author, Try again laterrr...!!!');
-                }
-
-            } catch (error) {
-                console.error("Error For Author:", error);
-                alert('Faild to update author, Try again later...!!!');
-
-            }
-            finally {
-                console.log('Author Update Attempt Completed');
-            }
-        }
-
-        let deleteAuthorId = null;
-        //  delete modal show  
-        async function deleteAuthor(authorId) {
-            deleteAuthorId = authorId;
-            let deleteModal = new bootstrap.Modal(document.getElementById('deleteAuthorModal'));
-            deleteModal.show();
-        }
-
-        // finally delete author 
-        async function deleteAuthorFinaly() {
-            let URL = `https://bs-api.sobuj.net/view/authors/deleteAuthor.php`;
-
-            try {
-                if (!deleteAuthorId) {
-                    alert('Author not found...!!!');
-                    return;
-                }
-
-                let formData = new FormData();
-                formData.append('author_id', deleteAuthorId);
-                let response = await axios.post(URL, formData);
-
-                if (response.status === 200) {
-                    // alert('Author Deleted Successfully...!!!');
-                    let modal = bootstrap.Modal.getInstance(document.getElementById('deleteAuthorModal'));
-                    modal.hide();
-                    getAuthors();
-                }
-                else {
-                    alert('Faild to delete author, Try again laterrr...!!!');
-                }
-
-            } catch (error) {
-                console.error("Error For Author:", error);
-                alert('Faild to delete author, Try again later...!!!');
 
             }
         }
-
-        async
+        getBooks();
     </script>
 </body>
 <!--end::Body-->
